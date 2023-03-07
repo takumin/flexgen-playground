@@ -60,6 +60,20 @@ build:
 	@docker build -t $(REPOSITORY):latest $(BUILD_ARGS) .
 
 #
+# Run Rules
+#
+
+.PHONY: run-opt-6.7b
+run-opt-6.7b:
+	@docker run --rm -i -t -v $(CURDIR)/.cache:/cache --gpus all $(REPOSITORY):latest \
+		python3 chatbot.py --model facebook/opt-6.7b --compress-weight
+
+.PHONY: run-opt-30b
+run-opt-30b:
+	@docker run --rm -i -t -v $(CURDIR)/.cache:/cache --gpus all $(REPOSITORY):latest \
+		python3 chatbot.py --model facebook/opt-30b --compress-weight
+
+#
 # Clean Rules
 #
 
@@ -67,3 +81,4 @@ build:
 clean:
 	@docker system prune -f
 	@docker volume prune -f
+	@sudo git clean -xdf .

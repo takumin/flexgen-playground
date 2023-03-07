@@ -5,7 +5,12 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --depth 1 https://github.com/Ying1123/FlexGen.git /usr/src/FlexGen
+RUN pip3 install --no-cache-dir --upgrade pip
+
+RUN git clone --depth 1 https://github.com/FMInference/FlexGen.git /usr/src/FlexGen
 WORKDIR /usr/src/FlexGen
-RUN pip3 install flexgen
+RUN pip3 install --no-cache-dir -e .
 RUN wget https://raw.githubusercontent.com/FMInference/FlexGen/9d888e5e3e6d78d6d4e1fdda7c8af508b889aeae/flexgen/apps/chatbot.py
+
+ENV TRANSFORMERS_CACHE=/cache
+ENV HUGGINGFACE_HUB_CACHE=/cache
