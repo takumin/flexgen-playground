@@ -73,6 +73,11 @@ run-opt-30b:
 	@docker run --rm -i -t -v $(CURDIR)/.cache:/cache --gpus all $(REPOSITORY):latest \
 		python3 chatbot.py --model facebook/opt-30b --compress-weight
 
+.PHONY: run-opt-66b
+run-opt-66b:
+	@docker run --rm -i -t -v $(CURDIR)/.cache:/cache --gpus all $(REPOSITORY):latest \
+		python3 chatbot.py --model facebook/opt-66b --percent 50 10 100 0 100 0 --compress-weight
+
 #
 # Clean Rules
 #
@@ -81,4 +86,7 @@ run-opt-30b:
 clean:
 	@docker system prune -f
 	@docker volume prune -f
+
+.PHONY: distclean
+distclean:
 	@sudo git clean -xdf .
